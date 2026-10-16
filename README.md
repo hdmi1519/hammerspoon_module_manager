@@ -6,23 +6,39 @@ A fast, floating module manager for Hammerspoon. It provides a visual interface 
 
 ## Installation
 
-### 1. Download the Manager
+### 1. Install Hammerspoon
+Before using this manager, you need to have Hammerspoon installed and running on your Mac. You can download it from [hammerspoon.org](https://www.hammerspoon.org/) or install it via Homebrew:
+```bash
+brew install --cask hammerspoon
+```
+
+### 2. Download the Manager
 You can install the manager either by cloning the repository or by creating the folder manually. 
 
 **Option A: Clone from Git**
 ```bash
 cd ~/.hammerspoon
-git clone [https://github.com/hdmi1519/hammerspoon_module_manager.git](https://github.com/hdmi1519/hammerspoon_module_manager.git) Modules
+git clone --depth 1 --filter=blob:none --sparse https://github.com/hdmi1519/hammerspoon_module_manager.git temp_repo
+cd temp_repo
+git sparse-checkout set Modules
+mv Modules ../Modules
+cd ..
+rm -rf temp_repo
 ```
 
-**Option B: Manual Setup**
+**Option B: Use CURL**
+```bash
+curl -o ~/.hammerspoon/Modules/module_manager.lua https://raw.githubusercontent.com/hdmi1519/hammerspoon_module_manager/main/Modules/module_manager.lua
+```
+
+**Option C: Manual Setup**
 1. Create a `Modules` directory inside your Hammerspoon config folder:
    ```bash
    mkdir -p ~/.hammerspoon/Modules
    ```
 2. Download or copy `module_manager.lua` and place it directly into the `~/.hammerspoon/Modules/` folder.
 
-### 2. Initialize in Hammerspoon
+### 3. Initialize in Hammerspoon
 Open your `~/.hammerspoon/init.lua` file and add the following line:
 
 ```lua
@@ -30,14 +46,14 @@ require("Modules.module_manager")
 ```
 *Note: You only need to `require` the file. The manager will silently load in the background and bind its hotkey. Calling `.start()` is not needed unless you want the UI window to forcefully pop up every time Hammerspoon restarts.*
 
-### 3. Apply Changes
+### 4. Apply Changes
 Reload your Hammerspoon configuration (usually via the menubar icon or `Cmd + Alt + Ctrl + R`).
 
 ## Usage
 
-* **Toggle Interface**: Press `Cmd + Alt + M` to open or close the module manager.
-* **Close Window**: Press `Esc` while the window is active.
-* **Refresh List**: Press `Cmd + R` while the window is focused to discover newly added scripts without restarting Hammerspoon.
+- **Toggle Interface**: Press `Cmd + Alt + M` to open or close the module manager.
+- **Close Window**: Press `Esc` while the window is active.
+- **Refresh List**: Press `Cmd + R` while the window is focused to discover newly added scripts without restarting Hammerspoon.
 
 ## Writing Modules
 
